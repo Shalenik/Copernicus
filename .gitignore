@@ -1,0 +1,26 @@
+venv/
+.venv/
+*.pyc
+__pycache__/
+*.nc
+*.egg-info/
+.DS_Store
+.cdsapirc
+*.log
+.pytest_cache/
+.coverage
+dist/
+build/
+*.egg
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# CMIP6 outputs
+CMIP6/*/*/
+CMIP6/*_summary.csv
+CMIP6/*_plots_avg.png
+!CMIP6/*/*_temperature_anomalies_all_models_*baseline.nc
+!CMIP6/*/*_temperature_anomalies_JJA_all_models_*baseline.nc
