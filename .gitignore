@@ -1,0 +1,22 @@
+venv/
+.venv/
+*.pyc
+__pycache__/
+*.nc
+*.egg-info/
+.DS_Store
+.cdsapirc
+*.log
+.pytest_cache/
+.coverage
+dist/
+build/
+*.egg
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# CMIP6 data and outputs
+CMIP6/
