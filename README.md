@@ -1,5 +1,7 @@
 # Copernicus CMIP6 Processing
 
+[![DOI](https://zenodo.org/badge/1162956953.svg)](https://doi.org/10.5281/zenodo.18791180)
+
 Bulk download, process, validate, and plot CMIP6 climate model anomalies for a location (New York example included).
 
 ## Project Structure
