@@ -2,7 +2,7 @@
 """
 CMIP6 Climate Data Download Script
 
-This script downloads CMIP6 projections data for North Carolina.
+This script downloads CMIP6 projections data, defaulting to North Carolina.
 
 Before running:
 1. Ensure ~/.cdsapirc is configured with your CDS API credentials
@@ -620,7 +620,7 @@ def download_cmip6_data(download_dir="CMIP6", area=None, location=None):
         area = [36.6, -84.3, 33.8, -75.4]
     
     dataset = "projections-cmip6"
-    excel_file = "CMIP6_Model_Availability.xlsx"
+    excel_file = "docs/CMIP6_Model_Availability.xlsx"
     sheet_name = "Intersection_All_SSPs"
 
     variables = {

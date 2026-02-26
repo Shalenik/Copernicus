@@ -2,11 +2,34 @@
 
 Bulk download, process, validate, and plot CMIP6 climate model anomalies for a location (New York example included).
 
+## Project Structure
+
+```
+Copernicus/
+├── src/                    # Core Python modules
+│   ├── __init__.py
+│   └── cmip6.py           # Main CMIP6 data processing functions
+├── scripts/               # Command-line scripts
+│   ├── download_all_models.py
+│   └── investigate_model_errors.py
+├── notebooks/             # Jupyter notebooks for interactive analysis
+│   ├── cmip6_bulk_download_newyork.ipynb
+│   ├── cmip6_single_model_newyork.ipynb
+│   └── cmip6_single_model_northcarolina.ipynb
+├── docs/                  # Documentation and reference materials
+│   ├── CMIP6_Model_Availability.xlsx
+│   └── Available models by SSP.docx
+├── requirements.txt       # Python dependencies
+└── README.md             # This file
+```
+
 ## Setup
 
 1. Create and activate a virtual environment.
 2. Install dependencies:
-   - `pip install -r requirements.txt`
+   ```bash
+   pip install -r requirements.txt
+   ```
 3. Ensure your CDS API credentials exist at `~/.cdsapirc` and accept CMIP6 Terms of Use.
 
 ## Data Source
@@ -19,7 +42,7 @@ CMIP6 data is accessed from the Copernicus Climate Data Store (CDS):
 
 ## Bulk Workflow (Notebook)
 
-Open [cmip6_bulk_download_newyork.ipynb](cmip6_bulk_download_newyork.ipynb) and run the cells in order.
+Open [notebooks/cmip6_bulk_download_newyork.ipynb](notebooks/cmip6_bulk_download_newyork.ipynb) and run the cells in order.
 
 Key steps:
 
@@ -31,23 +54,23 @@ Key steps:
 ## Command-Line Workflow
 
 ### Download only
-```
-python download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --download-only
+```bash
+python scripts/download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --download-only
 ```
 
 ### Process only
-```
-python download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --process-only
+```bash
+python scripts/download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --process-only
 ```
 
 ### Plot only
-```
-python download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --plot-only
+```bash
+python scripts/download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --plot-only
 ```
 
 ### Combine only (location-wide files)
-```
-python download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --combine-only --max-year 2100
+```bash
+python scripts/download_all_models.py --location NewYork --area 45 -75 40 -70 --download-dir CMIP6 --combine-only --max-year 2100
 ```
 
 ## Outputs
@@ -72,7 +95,22 @@ Summary:
 
 ## Single Model Notebook
 
-Use [cmip6_single_model_newyork.ipynb](cmip6_single_model_newyork.ipynb) for a focused download of one CMIP6 model.
+Use [notebooks/cmip6_single_model_newyork.ipynb](notebooks/cmip6_single_model_newyork.ipynb) for a focused download of one CMIP6 model.
+
+## Module Usage
+
+You can also import and use the core functions in your own Python scripts:
+
+```python
+from src.cmip6 import (
+    download_model_scenario,
+    get_models_from_excel,
+    compute_anomalies,
+    average_tasmax_tasmin
+)
+
+# Your custom processing code here
+```
 
 ## Citations & Terms of Use
 

@@ -20,7 +20,9 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import numpy as np
 
-from cmip6 import (
+# Update import to use src module
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from src.cmip6 import (
     download_model_scenario,
     get_models_from_excel,
     open_dataset_auto,
@@ -34,9 +36,13 @@ import cdsapi
 
 
 def download_all_models(
-    location, area, download_dir="CMIP6", excel_file="CMIP6_Model_Availability.xlsx"
+    location, area, download_dir="CMIP6", excel_file=None
 ):
     """Download tasmax and tasmin for all models."""
+    
+    # Use absolute path if excel_file not provided
+    if excel_file is None:
+        excel_file = Path(__file__).parent.parent / "docs" / "CMIP6_Model_Availability.xlsx"
     
     sheet_name = "Intersection_All_SSPs"
     models, availability = get_models_from_excel(excel_file, sheet_name)
@@ -336,7 +342,8 @@ def combine_all_models_outputs(
         out_monthly = location_dir / (
             f"{location_dir.name}_temperature_anomalies_all_models_{baseline_start}-{baseline_end}baseline.nc"
         )
-        combined_monthly_ds.to_netcdf(out_monthly)
+        # Use unlimited_dims for time to handle cftime properly
+        combined_monthly_ds.to_netcdf(out_monthly, unlimited_dims=['time'])
         outputs["monthly"] = out_monthly
 
     if combined_jja:
@@ -346,7 +353,8 @@ def combine_all_models_outputs(
         out_jja = location_dir / (
             f"{location_dir.name}_temperature_anomalies_JJA_all_models_{baseline_start}-{baseline_end}baseline.nc"
         )
-        combined_jja_ds.to_netcdf(out_jja)
+        # Use unlimited_dims for time to handle cftime properly
+        combined_jja_ds.to_netcdf(out_jja, unlimited_dims=['time'])
         outputs["jja"] = out_jja
 
     return outputs
@@ -559,8 +567,8 @@ def main():
     )
     parser.add_argument(
         "--excel-file",
-        default="CMIP6_Model_Availability.xlsx",
-        help="Excel file with model availability",
+        default=None,
+        help="Excel file with model availability (default: docs/CMIP6_Model_Availability.xlsx)",
     )
     parser.add_argument(
         "--skip-download",
@@ -619,6 +627,12 @@ def main():
     # Handle deprecated --skip-download
     if args.skip_download:
         args.process_only = True
+    
+    # Convert excel_file to absolute path if not provided
+    if args.excel_file is None:
+        args.excel_file = Path(__file__).parent.parent / "docs" / "CMIP6_Model_Availability.xlsx"
+    else:
+        args.excel_file = Path(args.excel_file)
     
     print("\n" + "="*70)
     print("CMIP6 BULK DOWNLOAD AND PROCESSING")

@@ -7,11 +7,14 @@ Usage:
 """
 
 import argparse
+import sys
 from pathlib import Path
 
 import xarray as xr
 
-from cmip6 import open_dataset_auto
+# Update import to use src module
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from src.cmip6 import open_dataset_auto
 
 
 def summarize_time_axis(ds: xr.Dataset, label: str):
